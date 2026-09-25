@@ -201,4 +201,4 @@ Contributions, feature requests, and bug reports are welcome! Feel free to check
 
 ## 📄 License
 
-This project is licensed under the [MIT License](file:///Users/inintr00416/Desktop/baron-tv-remote/LICENSE) - see the LICENSE file for details.
+This project is licensed under the [MIT License](LICENSE) - see the LICENSE file for details.
