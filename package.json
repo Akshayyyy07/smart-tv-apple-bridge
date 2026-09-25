@@ -1,0 +1,46 @@
+{
+  "name": "smart-tv-apple-bridge",
+  "version": "1.0.0",
+  "description": "Universal Android Smart TV remote control and Apple ecosystem bridge (HomeKit TV accessory, Siri voice control, AirPlay mirroring, and glassmorphic web remote).",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc && cp -r src/public dist/",
+    "start": "node dist/index.js",
+    "dev": "ts-node src/index.ts",
+    "test": "node dist/tests/test_remote.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Akshayyyy07/smart-tv-apple-bridge.git"
+  },
+  "keywords": [
+    "android-tv",
+    "homekit",
+    "airplay",
+    "apple-tv",
+    "siri",
+    "smart-tv",
+    "adb",
+    "remote-control",
+    "typescript",
+    "iot",
+    "glassmorphism",
+    "pwa"
+  ],
+  "author": "Akshay <152633881+Akshayyyy07@users.noreply.github.com>",
+  "license": "MIT",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.19.2",
+    "hap-nodejs": "^0.11.2",
+    "qrcode": "^1.5.3"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.17",
+    "@types/express": "^4.17.21",
+    "@types/node": "^20.14.0",
+    "@types/qrcode": "^1.5.5",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.4.5"
+  }
+}

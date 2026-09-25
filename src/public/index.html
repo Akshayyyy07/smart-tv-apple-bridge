@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Baron Smart TV Remote</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="remote.css">
+</head>
+<body>
+  <div class="remote-container">
+    <!-- Header / Brand & Status -->
+    <header class="remote-header">
+      <div class="brand">
+        <span class="brand-logo">BARON</span>
+        <span class="brand-sub">SMART TV • ANDROID 9</span>
+      </div>
+      <div class="status-pill" id="status-pill">
+        <span class="status-dot"></span>
+        <span class="status-text" id="status-text">Connecting...</span>
+      </div>
+    </header>
+
+    <!-- Top Action Bar (Power, Settings, Screen Preview) -->
+    <div class="top-row">
+      <button class="btn btn-icon btn-secondary" id="btn-preview" title="Live Screen View">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+          <line x1="8" y1="21" x2="16" y2="21"></line>
+          <line x1="12" y1="17" x2="12" y2="21"></line>
+        </svg>
+        <span>Live</span>
+      </button>
+
+      <button class="btn btn-icon btn-secondary" id="btn-keyboard" title="Keyboard Text Input">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="2" y="4" width="20" height="16" rx="2"></rect>
+          <line x1="6" y1="8" x2="6.01" y2="8"></line>
+          <line x1="10" y1="8" x2="10.01" y2="8"></line>
+          <line x1="14" y1="8" x2="14.01" y2="8"></line>
+          <line x1="18" y1="8" x2="18.01" y2="8"></line>
+          <line x1="7" y1="16" x2="17" y2="16"></line>
+        </svg>
+        <span>Type</span>
+      </button>
+
+      <button class="btn btn-power" id="btn-power" title="Power / Standby">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.5">
+          <path d="M18.36 6.64a9 9 0 1 1-12.73 0"></path>
+          <line x1="12" y1="2" x2="12" y2="12"></line>
+        </svg>
+      </button>
+    </div>
+
+    <!-- D-Pad Navigation Circle -->
+    <div class="dpad-container">
+      <div class="dpad">
+        <button class="dpad-btn dpad-up" id="btn-up" title="Up">
+          <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+            <path d="M12 5l-7 7h14z"/>
+          </svg>
+        </button>
+        <button class="dpad-btn dpad-left" id="btn-left" title="Left">
+          <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+            <path d="M5 12l7-7v14z"/>
+          </svg>
+        </button>
+        <button class="dpad-btn dpad-center" id="btn-ok" title="OK / Enter">
+          <span>OK</span>
+        </button>
+        <button class="dpad-btn dpad-right" id="btn-right" title="Right">
+          <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+            <path d="M19 12l-7-7v14z"/>
+          </svg>
+        </button>
+        <button class="dpad-btn dpad-down" id="btn-down" title="Down">
+          <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+            <path d="M12 19l-7-7h14z"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Navigation Row: Home, Back, Menu -->
+    <div class="nav-row">
+      <button class="btn btn-pill" id="btn-home" title="Home">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+          <polyline points="9 22 9 12 15 12 15 22"></polyline>
+        </svg>
+        <span>Home</span>
+      </button>
+
+      <button class="btn btn-pill" id="btn-back" title="Back">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="19" y1="12" x2="5" y2="12"></line>
+          <polyline points="12 19 5 12 12 5"></polyline>
+        </svg>
+        <span>Back</span>
+      </button>
+
+      <button class="btn btn-pill" id="btn-menu" title="Menu">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="3" y1="12" x2="21" y2="12"></line>
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+        <span>Menu</span>
+      </button>
+    </div>
+
+    <!-- Rocker Controls: Volume & Channel -->
+    <div class="rockers-row">
+      <!-- Volume Column -->
+      <div class="rocker-group">
+        <span class="rocker-label">VOL</span>
+        <div class="rocker">
+          <button class="rocker-btn" id="btn-vol-up" title="Volume Up">+</button>
+          <div class="rocker-divider"></div>
+          <button class="rocker-btn" id="btn-vol-down" title="Volume Down">-</button>
+        </div>
+      </div>
+
+      <!-- Center Mute / Input / Play Column -->
+      <div class="center-controls">
+        <button class="btn btn-square" id="btn-mute" title="Mute">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+            <line x1="23" y1="9" x2="17" y2="15"></line>
+            <line x1="17" y1="9" x2="23" y2="15"></line>
+          </svg>
+          <span class="btn-sub">Mute</span>
+        </button>
+
+        <button class="btn btn-square" id="btn-input" title="Source / Input">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+            <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+          </svg>
+          <span class="btn-sub">Input</span>
+        </button>
+
+        <button class="btn btn-square" id="btn-play-pause" title="Play / Pause">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon points="5 3 19 12 5 21 5 3"></polygon>
+          </svg>
+          <span class="btn-sub">Play</span>
+        </button>
+      </div>
+
+      <!-- Channel Column -->
+      <div class="rocker-group">
+        <span class="rocker-label">CH</span>
+        <div class="rocker">
+          <button class="rocker-btn" id="btn-ch-up" title="Channel Up">▲</button>
+          <div class="rocker-divider"></div>
+          <button class="rocker-btn" id="btn-ch-down" title="Channel Down">▼</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Media Controls Row -->
+    <div class="media-row">
+      <button class="btn btn-sm" id="btn-rewind" title="Rewind">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+          <polygon points="11 19 2 12 11 5 11 19"></polygon>
+          <polygon points="22 19 13 12 22 5 22 19"></polygon>
+        </svg>
+      </button>
+      <button class="btn btn-sm" id="btn-stop" title="Stop">
+        <rect x="6" y="6" width="12" height="12" fill="currentColor"></rect>
+      </button>
+      <button class="btn btn-sm" id="btn-ff" title="Fast Forward">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+          <polygon points="13 19 22 12 13 5 13 19"></polygon>
+          <polygon points="2 19 11 12 2 5 2 19"></polygon>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Quick App Launchers Grid -->
+    <div class="apps-section">
+      <div class="section-title">QUICK APPS</div>
+      <div class="apps-grid">
+        <button class="app-btn app-youtube" data-app="youtube">
+          <span>YouTube</span>
+        </button>
+        <button class="app-btn app-netflix" data-app="netflix">
+          <span>Netflix</span>
+        </button>
+        <button class="app-btn app-prime" data-app="prime">
+          <span>Prime</span>
+        </button>
+        <button class="app-btn app-hotstar" data-app="hotstar">
+          <span>Hotstar</span>
+        </button>
+        <button class="app-btn app-jio" data-app="jiocinema">
+          <span>JioCinema</span>
+        </button>
+        <button class="app-btn app-settings" data-app="settings">
+          <span>Settings</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Phone QR Code & Apple HomeKit Quick Links -->
+    <footer class="remote-footer">
+      <button class="btn-qr btn-apple" id="btn-show-homekit">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+          <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M15.97 6.37c.62-.75 1.04-1.8 1.01-2.87-.96.04-2.12.64-2.8 1.44-.59.69-1.11 1.76-.97 2.82 1.07.08 2.14-.56 2.76-1.39z"/>
+        </svg>
+        <span>Apple HomeKit</span>
+      </button>
+      <button class="btn-qr" id="btn-show-qr">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="3" y="3" width="7" height="7"></rect>
+          <rect x="14" y="3" width="7" height="7"></rect>
+          <rect x="14" y="14" width="7" height="7"></rect>
+          <rect x="3" y="14" width="7" height="7"></rect>
+        </svg>
+        <span>Web Remote QR</span>
+      </button>
+    </footer>
+  </div>
+
+  <!-- Text Input Modal -->
+  <div class="modal-overlay" id="keyboard-modal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3>Type to TV</h3>
+        <button class="modal-close" id="btn-close-modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <input type="text" id="keyboard-input" placeholder="Type text, search, or URL..." autofocus />
+        <div class="modal-actions">
+          <button class="btn btn-secondary" id="btn-clear-text">Clear</button>
+          <button class="btn btn-primary" id="btn-send-text">Send to TV</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Screen Preview Modal -->
+  <div class="modal-overlay" id="preview-modal">
+    <div class="modal-card modal-wide">
+      <div class="modal-header">
+        <h3>Live TV Screen</h3>
+        <div class="modal-actions-right">
+          <button class="btn btn-sm btn-secondary" id="btn-refresh-screen">Refresh</button>
+          <button class="modal-close" id="btn-close-preview">&times;</button>
+        </div>
+      </div>
+      <div class="modal-body text-center">
+        <div class="screen-preview-wrapper" id="preview-wrapper">
+          <img id="screen-img" src="" alt="TV Screen Preview" />
+          <div class="screen-loading" id="screen-loading">Capturing screen...</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- QR Code Modal -->
+  <div class="modal-overlay" id="qr-modal">
+    <div class="modal-card text-center">
+      <div class="modal-header">
+        <h3>Control from Phone</h3>
+        <button class="modal-close" id="btn-close-qr">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p class="qr-desc">Scan with your phone's camera on the same Wi-Fi:</p>
+        <img id="qr-img" src="" alt="QR Code" class="qr-code-img" />
+        <p class="qr-url" id="qr-url"></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Apple HomeKit Pairing Modal -->
+  <div class="modal-overlay" id="homekit-modal">
+    <div class="modal-card text-center">
+      <div class="modal-header">
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+            <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M15.97 6.37c.62-.75 1.04-1.8 1.01-2.87-.96.04-2.12.64-2.8 1.44-.59.69-1.11 1.76-.97 2.82 1.07.08 2.14-.56 2.76-1.39z"/>
+          </svg>
+          <h3>Apple HomeKit Setup</h3>
+        </div>
+        <button class="modal-close" id="btn-close-homekit">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p class="qr-desc">Scan in the Apple <strong>Home</strong> app on iPhone or Mac:</p>
+        <img id="homekit-qr-img" src="" alt="HomeKit QR Code" class="qr-code-img" />
+        <div style="background: rgba(255,255,255,0.06); padding: 10px; border-radius: 12px; margin-top: 10px;">
+          <div style="font-size: 0.72rem; color: #8b949e; letter-spacing: 1px;">PAIRING PIN CODE</div>
+          <div id="homekit-pin" style="font-size: 1.4rem; font-weight: 800; letter-spacing: 3px; color: #00e5ff; font-family: monospace;">031-45-154</div>
+        </div>
+        <p style="font-size: 0.75rem; color: #94a3b8; margin-top: 12px; line-height: 1.4;">
+          Open <strong>Home</strong> app ➔ tap <strong>+</strong> ➔ <strong>Add Accessory</strong> ➔ Scan QR code or tap <em>"More options..."</em> and select <strong>Baron TV</strong>!
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <script src="remote.js"></script>
+</body>
+</html>

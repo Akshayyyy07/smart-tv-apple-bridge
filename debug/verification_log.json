@@ -1,0 +1,45 @@
+{
+  "Home": {
+    "status": "SUCCESS",
+    "focus": "mCurrentFocus=Window{e7a7efa u0 com.cvte.tv.setting/com.cvte.tv.setting.TvSettingActivity}"
+  },
+  "Dpad_Right": {
+    "status": "SUCCESS"
+  },
+  "Dpad_Left": {
+    "status": "SUCCESS"
+  },
+  "Dpad_Down": {
+    "status": "SUCCESS"
+  },
+  "Dpad_Up": {
+    "status": "SUCCESS"
+  },
+  "OK_Enter": {
+    "status": "SUCCESS"
+  },
+  "Volume": {
+    "status": "SUCCESS",
+    "before": "Current: 2 (speaker): 17, 4 (headset): 10, 8 (headphone): 10, 4000000 (usb_headset): 25, 40000000 (default): 30",
+    "after_up": "Current: 2 (speaker): 18, 4 (headset): 10, 8 (headphone): 10, 4000000 (usb_headset): 25, 40000000 (default): 30",
+    "after_down": "Current: 2 (speaker): 17, 4 (headset): 10, 8 (headphone): 10, 4000000 (usb_headset): 25, 40000000 (default): 30"
+  },
+  "Mute": {
+    "status": "SUCCESS",
+    "muted": true,
+    "unmuted": true
+  },
+  "Channel": {
+    "status": "SUCCESS",
+    "channel_up_key": 166,
+    "channel_down_key": 167
+  },
+  "Play_Pause": {
+    "status": "SUCCESS",
+    "media_key": 85
+  },
+  "Input_Source": {
+    "status": "SUCCESS",
+    "focus": "mCurrentFocus=Window{11c2388 u0 com.cvte.tv.setting/com.cvte.tv.setting.extra.TvExtraActivity}"
+  }
+}

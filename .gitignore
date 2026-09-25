@@ -1,0 +1,30 @@
+# Dependencies
+node_modules/
+package-lock.json
+
+# Build outputs
+dist/
+*.tsbuildinfo
+
+# Runtime caches & logs
+cache/
+*.log
+.DS_Store
+
+# Temporary binary dumps & backups (preserve repo size)
+debug/*.apk
+debug/*.keystore
+debug/apk_backups/
+debug/ui.xml
+debug/crop_*.png
+debug/current_screen.png
+debug/tv_screen_*.png
+debug/tv_home_clean.png
+
+# Environment variables
+.env
+.env.local
+
+# Python cache
+__pycache__/
+*.pyc

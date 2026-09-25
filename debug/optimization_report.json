@@ -1,0 +1,29 @@
+{
+  "timestamp": "Fri Sep 25 22:51:46 2026",
+  "storage": {
+    "before": {
+      "size": "665M",
+      "used": "577M",
+      "avail": "61M",
+      "use_percent": "91%"
+    },
+    "after": {
+      "size": "665M",
+      "used": "533M",
+      "avail": "104M",
+      "use_percent": "84%"
+    }
+  },
+  "ram": {
+    "before": {
+      "total": "487 MB",
+      "used": "469 MB",
+      "free": "18 MB"
+    },
+    "after": {
+      "total": "487 MB",
+      "used": "405 MB",
+      "free": "81 MB"
+    }
+  }
+}
