@@ -18,45 +18,36 @@ export class TVRemote {
     const http = new HTTPTransport();
     const ws = new WebSocketTransport();
 
-    this.transports = [adb, cast, http, ws];
-    this.activeTransport = adb; // Default to discovered working transport
+    this.transports = [adb, http, cast, ws];
+    this.activeTransport = http; // Default to CVTE/EShare port 8000
   }
 
   public async init(targetIp?: string): Promise<boolean> {
-    if (targetIp) {
-      this.currentDevice = {
-        ip: targetIp,
-        port: 5555,
-        mac: '38:be:ab:9f:06:55',
-        method: 'Manual Override',
-        model: 'Baron Smart TV',
-      };
-    } else {
-      console.log('[*] Running network discovery for Baron TV...');
-      this.currentDevice = await this.discovery.discover();
-    }
+    const ip = targetIp || '192.168.1.5';
+    this.currentDevice = {
+      ip,
+      port: 8000,
+      mac: 'C0:8A:CD:AF:AF:E2',
+      method: 'CVTE Native HTTP (Port 8000)',
+      model: 'Ego 55-4K_708 Smart TV',
+    };
 
-    if (!this.currentDevice) {
-      console.warn('[-] No Baron TV discovered automatically.');
-      return false;
-    }
-
-    console.log(
-      `[+] Connecting to Baron TV at ${this.currentDevice.ip}:${this.currentDevice.port} via ${this.activeTransport.name}`
-    );
-
-    const connected = await this.activeTransport.connect(
-      this.currentDevice.ip,
-      this.currentDevice.port
-    );
-
+    console.log(`[*] Connecting to TV at ${ip}:8000 via CVTE/EShare HTTP...`);
+    const connected = await this.activeTransport.connect(ip, 8000);
     if (connected) {
-      console.log(`[+] Successfully connected to Baron TV!`);
-    } else {
-      console.error(`[-] Failed to connect to Baron TV at ${this.currentDevice.ip}`);
+      console.log(`[✔] Connected to Ego TV via CVTE/EShare HTTP transport!`);
+      return true;
     }
 
-    return connected;
+    // Fallback to ADB transport
+    const adbTransport = this.transports[0];
+    const adbOk = await adbTransport.connect(ip, 5555);
+    if (adbOk) {
+      this.activeTransport = adbTransport;
+      return true;
+    }
+
+    return false;
   }
 
   public async sendCommand(command: string): Promise<boolean> {
