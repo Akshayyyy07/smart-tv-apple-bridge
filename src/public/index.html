@@ -7,6 +7,12 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="TV Remote">
+  <meta name="theme-color" content="#0a0c10">
   <link rel="stylesheet" href="remote.css">
 </head>
 <body>
@@ -44,6 +50,13 @@
           <line x1="7" y1="16" x2="17" y2="16"></line>
         </svg>
         <span>Type</span>
+      </button>
+
+      <button class="btn btn-icon btn-secondary" id="btn-server-settings" title="Connection Settings">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="3"></circle>
+          <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+        </svg>
       </button>
 
       <button class="btn btn-power" id="btn-power" title="Power / Standby">
@@ -213,6 +226,14 @@
         </svg>
         <span>Apple HomeKit</span>
       </button>
+      <a href="/download/SmartTVRemote.apk" class="btn-qr btn-apk" id="btn-download-apk" download style="text-decoration: none; display: inline-flex; align-items: center; gap: 6px;">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+          <polyline points="7 10 12 15 17 10"></polyline>
+          <line x1="12" y1="15" x2="12" y2="3"></line>
+        </svg>
+        <span>Android APK</span>
+      </a>
       <button class="btn-qr" id="btn-show-qr">
         <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
           <rect x="3" y="3" width="7" height="7"></rect>
@@ -220,7 +241,7 @@
           <rect x="14" y="14" width="7" height="7"></rect>
           <rect x="3" y="14" width="7" height="7"></rect>
         </svg>
-        <span>Web Remote QR</span>
+        <span>QR</span>
       </button>
     </footer>
   </div>
@@ -298,6 +319,23 @@
         <p style="font-size: 0.75rem; color: #94a3b8; margin-top: 12px; line-height: 1.4;">
           Open <strong>Home</strong> app ➔ tap <strong>+</strong> ➔ <strong>Add Accessory</strong> ➔ Scan QR code or tap <em>"More options..."</em> and select <strong>Baron TV</strong>!
         </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Server Connection Settings Modal (Mobile App) -->
+  <div class="modal-overlay" id="server-settings-modal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3>Server Settings</h3>
+        <button class="modal-close" id="btn-close-settings">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p style="font-size: 0.85rem; color: #94a3b8; margin-bottom: 12px;">Enter your Mac/Server IP & Port to connect the remote:</p>
+        <input type="text" id="server-url-input" placeholder="http://192.168.1.4:3050" style="width: 100%; box-sizing: border-box;" />
+        <div class="modal-actions" style="margin-top: 14px;">
+          <button class="btn btn-primary" id="btn-save-server-url" style="width: 100%;">Save & Connect</button>
+        </div>
       </div>
     </div>
   </div>

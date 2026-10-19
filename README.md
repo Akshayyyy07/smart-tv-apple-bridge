@@ -26,6 +26,10 @@
   * Native 1080p/60fps AirPlay video and synchronized audio receiver running locally on the TV.
   * Direct one-click screen mirroring from macOS Control Center and iOS Control Center.
   * Auto-starts silently on TV boot (`Start on boot = true`).
+* **📦 Standalone Android APK & Native iOS Project**:
+  * Native Android application (`SmartTVRemote.apk`, package `com.akshay.tvremote`) with hardware haptics and cleartext LAN support.
+  * Direct 1-tap download endpoint hosted on the server (`/download/SmartTVRemote.apk`).
+  * Full native iOS Xcode Workspace (`ios/App/App.xcworkspace`) with `NSLocalNetworkUsageDescription` and custom app icons.
 * **📱 Luxury Glassmorphic Web Remote (PWA)**:
   * Responsive mobile-first interface styled with modern glassmorphism.
   * Haptic vibration feedback on tactile button presses.

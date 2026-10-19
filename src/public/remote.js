@@ -1,13 +1,35 @@
 // Baron Smart TV Remote Frontend Controller
 
+// Dynamic server URL resolution (supporting native Capacitor & Web)
+function getApiUrl(endpoint) {
+  let base = localStorage.getItem('tv_remote_server_url');
+  if (!base) {
+    // If inside Capacitor, file protocol, or standalone origin without port 3050:
+    if (window.location.protocol === 'capacitor:' || window.location.protocol === 'file:' || !window.location.port || window.location.port !== '3050') {
+      base = 'http://192.168.1.4:3050';
+    } else {
+      base = '';
+    }
+  }
+  return `${base}${endpoint}`;
+}
+
 const statusPill = document.getElementById('status-pill');
 const statusText = document.getElementById('status-text');
 
-// Haptic feedback helper for mobile
-function haptic(ms = 25) {
+// Haptic feedback helper for mobile (Native Capacitor + Web API)
+async function haptic(style = 'LIGHT') {
+  if (window.Capacitor && window.Capacitor.Plugins && window.Capacitor.Plugins.Haptics) {
+    try {
+      await window.Capacitor.Plugins.Haptics.impact({ style });
+      return;
+    } catch (e) {
+      // fallback
+    }
+  }
   if (window.navigator && window.navigator.vibrate) {
     try {
-      window.navigator.vibrate(ms);
+      window.navigator.vibrate(style === 'HEAVY' ? 45 : 25);
     } catch (e) {
       // ignore
     }
@@ -16,9 +38,9 @@ function haptic(ms = 25) {
 
 // Send command to backend
 async function sendCommand(command) {
-  haptic(30);
+  haptic('LIGHT');
   try {
-    const res = await fetch('/api/command', {
+    const res = await fetch(getApiUrl('/api/command'), {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ command }),
@@ -34,9 +56,9 @@ async function sendCommand(command) {
 
 // Launch app
 async function launchApp(app) {
-  haptic(40);
+  haptic('MEDIUM');
   try {
-    const res = await fetch('/api/app', {
+    const res = await fetch(getApiUrl('/api/app'), {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ app }),
@@ -52,9 +74,9 @@ async function launchApp(app) {
 
 // Send text
 async function sendText(text) {
-  haptic(25);
+  haptic('LIGHT');
   try {
-    const res = await fetch('/api/text', {
+    const res = await fetch(getApiUrl('/api/text'), {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ text }),
@@ -69,7 +91,7 @@ async function sendText(text) {
 // Poll TV Status
 async function pollStatus() {
   try {
-    const res = await fetch('/api/status');
+    const res = await fetch(getApiUrl('/api/status'));
     const data = await res.json();
 
     if (data.connected) {
@@ -208,36 +230,46 @@ function setupModals() {
   const btnSendText = document.getElementById('btn-send-text');
   const btnClearText = document.getElementById('btn-clear-text');
 
-  btnKeyboard.addEventListener('click', () => {
-    keyboardModal.classList.add('active');
-    setTimeout(() => keyboardInput.focus(), 100);
-  });
+  if (btnKeyboard) {
+    btnKeyboard.addEventListener('click', () => {
+      keyboardModal.classList.add('active');
+      setTimeout(() => keyboardInput.focus(), 100);
+    });
+  }
 
-  btnCloseModal.addEventListener('click', () => keyboardModal.classList.remove('active'));
-  btnClearText.addEventListener('click', () => {
-    keyboardInput.value = '';
-    keyboardInput.focus();
-  });
-
-  btnSendText.addEventListener('click', async () => {
-    const val = keyboardInput.value.trim();
-    if (val) {
-      await sendText(val);
+  if (btnCloseModal) {
+    btnCloseModal.addEventListener('click', () => keyboardModal.classList.remove('active'));
+  }
+  if (btnClearText) {
+    btnClearText.addEventListener('click', () => {
       keyboardInput.value = '';
-      keyboardModal.classList.remove('active');
-    }
-  });
+      keyboardInput.focus();
+    });
+  }
 
-  keyboardInput.addEventListener('keydown', async (e) => {
-    if (e.key === 'Enter') {
+  if (btnSendText) {
+    btnSendText.addEventListener('click', async () => {
       const val = keyboardInput.value.trim();
       if (val) {
         await sendText(val);
         keyboardInput.value = '';
         keyboardModal.classList.remove('active');
       }
-    }
-  });
+    });
+  }
+
+  if (keyboardInput) {
+    keyboardInput.addEventListener('keydown', async (e) => {
+      if (e.key === 'Enter') {
+        const val = keyboardInput.value.trim();
+        if (val) {
+          await sendText(val);
+          keyboardInput.value = '';
+          keyboardModal.classList.remove('active');
+        }
+      }
+    });
+  }
 
   // Screen Preview Modal
   const previewModal = document.getElementById('preview-modal');
@@ -251,7 +283,7 @@ function setupModals() {
     screenLoading.style.display = 'block';
     screenImg.style.display = 'none';
     const newImg = new Image();
-    newImg.src = `/api/screenshot?t=${Date.now()}`;
+    newImg.src = getApiUrl(`/api/screenshot?t=${Date.now()}`);
     newImg.onload = () => {
       screenImg.src = newImg.src;
       screenLoading.style.display = 'none';
@@ -262,13 +294,15 @@ function setupModals() {
     };
   }
 
-  btnPreview.addEventListener('click', () => {
-    previewModal.classList.add('active');
-    loadScreenshot();
-  });
+  if (btnPreview) {
+    btnPreview.addEventListener('click', () => {
+      previewModal.classList.add('active');
+      loadScreenshot();
+    });
+  }
 
-  btnRefreshScreen.addEventListener('click', loadScreenshot);
-  btnClosePreview.addEventListener('click', () => previewModal.classList.remove('active'));
+  if (btnRefreshScreen) btnRefreshScreen.addEventListener('click', loadScreenshot);
+  if (btnClosePreview) btnClosePreview.addEventListener('click', () => previewModal.classList.remove('active'));
 
   // QR Code Modal
   const qrModal = document.getElementById('qr-modal');
@@ -277,19 +311,21 @@ function setupModals() {
   const qrImg = document.getElementById('qr-img');
   const qrUrl = document.getElementById('qr-url');
 
-  btnShowQr.addEventListener('click', async () => {
-    qrModal.classList.add('active');
-    try {
-      const res = await fetch('/api/qr');
-      const data = await res.json();
-      qrImg.src = data.qrCodeDataUrl;
-      qrUrl.textContent = data.url;
-    } catch {
-      qrUrl.textContent = window.location.href;
-    }
-  });
+  if (btnShowQr) {
+    btnShowQr.addEventListener('click', async () => {
+      qrModal.classList.add('active');
+      try {
+        const res = await fetch(getApiUrl('/api/qr'));
+        const data = await res.json();
+        qrImg.src = data.qrCodeDataUrl;
+        qrUrl.textContent = data.url;
+      } catch {
+        qrUrl.textContent = window.location.href;
+      }
+    });
+  }
 
-  btnCloseQr.addEventListener('click', () => qrModal.classList.remove('active'));
+  if (btnCloseQr) btnCloseQr.addEventListener('click', () => qrModal.classList.remove('active'));
 
   // Apple HomeKit Modal
   const homekitModal = document.getElementById('homekit-modal');
@@ -302,7 +338,7 @@ function setupModals() {
     btnShowHomekit.addEventListener('click', async () => {
       homekitModal.classList.add('active');
       try {
-        const res = await fetch('/api/homekit');
+        const res = await fetch(getApiUrl('/api/homekit'));
         const data = await res.json();
         homekitQrImg.src = data.qrCodeDataUrl;
         homekitPin.textContent = data.pincode;
@@ -316,8 +352,37 @@ function setupModals() {
     btnCloseHomekit.addEventListener('click', () => homekitModal.classList.remove('active'));
   }
 
+  // Server Settings Modal (for Mobile App)
+  const settingsModal = document.getElementById('server-settings-modal');
+  const btnSettings = document.getElementById('btn-server-settings');
+  const btnCloseSettings = document.getElementById('btn-close-settings');
+  const serverUrlInput = document.getElementById('server-url-input');
+  const btnSaveServerUrl = document.getElementById('btn-save-server-url');
+
+  if (btnSettings) {
+    btnSettings.addEventListener('click', () => {
+      settingsModal.classList.add('active');
+      serverUrlInput.value = localStorage.getItem('tv_remote_server_url') || 'http://192.168.1.4:3050';
+    });
+  }
+
+  if (btnCloseSettings) {
+    btnCloseSettings.addEventListener('click', () => settingsModal.classList.remove('active'));
+  }
+
+  if (btnSaveServerUrl) {
+    btnSaveServerUrl.addEventListener('click', () => {
+      let val = serverUrlInput.value.trim().replace(/\/+$/, '');
+      if (val) {
+        localStorage.setItem('tv_remote_server_url', val);
+        pollStatus();
+      }
+      settingsModal.classList.remove('active');
+    });
+  }
+
   // Close modals on clicking overlay background
-  [keyboardModal, previewModal, qrModal, homekitModal].forEach((m) => {
+  [keyboardModal, previewModal, qrModal, homekitModal, settingsModal].forEach((m) => {
     if (m) {
       m.addEventListener('click', (e) => {
         if (e.target === m) m.classList.remove('active');

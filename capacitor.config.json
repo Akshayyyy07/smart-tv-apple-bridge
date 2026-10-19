@@ -1,0 +1,10 @@
+{
+  "appId": "com.akshay.tvremote",
+  "appName": "Smart TV Remote",
+  "webDir": "www",
+  "bundledWebRuntime": false,
+  "server": {
+    "cleartext": true,
+    "androidScheme": "http"
+  }
+}

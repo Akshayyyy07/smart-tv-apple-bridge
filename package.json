@@ -30,6 +30,12 @@
   "author": "Akshay <152633881+Akshayyyy07@users.noreply.github.com>",
   "license": "MIT",
   "dependencies": {
+    "@capacitor/android": "^8.5.3",
+    "@capacitor/cli": "^8.5.3",
+    "@capacitor/core": "^8.5.3",
+    "@capacitor/haptics": "^8.0.2",
+    "@capacitor/ios": "^8.5.3",
+    "@capacitor/status-bar": "^8.0.4",
     "cors": "^2.8.5",
     "express": "^4.19.2",
     "hap-nodejs": "^0.11.2",

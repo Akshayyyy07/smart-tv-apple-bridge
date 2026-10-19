@@ -11,6 +11,22 @@ cache/
 *.log
 .DS_Store
 
+# Android build artifacts
+android/.gradle/
+android/app/build/
+android/build/
+android/local.properties
+android/captures/
+.externalNativeBuild/
+.cxx/
+
+# iOS build artifacts
+ios/App/Pods/
+ios/App/build/
+ios/App/.build/
+*.xcuserstate
+*.xcuserdatad/
+
 # Temporary binary dumps & backups (preserve repo size)
 debug/*.apk
 debug/*.keystore

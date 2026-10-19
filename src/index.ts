@@ -142,6 +142,21 @@ app.post('/api/discover', async (req, res) => {
   }
 });
 
+// 9. Download Compiled Android APK
+app.get('/download/SmartTVRemote.apk', (req, res) => {
+  const possiblePaths = [
+    path.resolve(__dirname, '../release/SmartTVRemote.apk'),
+    path.resolve(__dirname, '../android/app/build/outputs/apk/debug/app-debug.apk'),
+  ];
+  for (const p of possiblePaths) {
+    if (require('fs').existsSync(p)) {
+      return res.download(p, 'SmartTVRemote.apk');
+    }
+  }
+  res.status(404).send('APK is currently building. Please refresh in a moment.');
+});
+
+
 // Start Server
 async function startServer() {
   const localIp = getLocalIp();
